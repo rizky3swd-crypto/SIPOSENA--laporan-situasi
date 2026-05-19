@@ -1880,3 +1880,60 @@ loadDefaultPrajaStats();
 </script>
 </body>
 </html>
+// Fungsi Autosave Lokal
+window.saveFormDraft = function() {
+    const draft = {
+        date: document.getElementById('form-date').value,
+        koor: document.getElementById('form-piket-koor').value,
+        sekretaris: document.getElementById('form-piket-sekretaris').value,
+        anggota: document.getElementById('form-piket-anggota').value,
+        totalL: document.getElementById('form-total-l').value,
+        totalP: document.getElementById('form-total-p').value,
+        personnel: document.getElementById('form-personnel').value
+        // Tambahkan input lain jika perlu
+    };
+    localStorage.setItem('lapsit_draft', JSON.stringify(draft));
+};
+
+// Fungsi Memuat Draft saat halaman dibuka
+window.loadDraft = function() {
+    const saved = localStorage.getItem('lapsit_draft');
+    if (saved) {
+        const draft = JSON.parse(saved);
+        if (document.getElementById('form-date')) document.getElementById('form-date').value = draft.date || '';
+        if (document.getElementById('form-piket-koor')) document.getElementById('form-piket-koor').value = draft.koor || '';
+        if (document.getElementById('form-personnel')) document.getElementById('form-personnel').value = draft.personnel || '';
+        // Tambahkan input lain
+    }
+};
+
+// Panggil fungsi load saat halaman pertama kali dibuka
+window.onload = function() {
+    window.loadDraft();
+};
+
+// Panggil ini setelah klik tombol Kirim untuk menghapus draft
+window.clearFormDraftFromCloud = function() {
+    localStorage.removeItem('lapsit_draft');
+};
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDlMMJRPLbIevVVApSkmbrFZbFKI_djkXU",
+  authDomain: "siposena-laporan-situasi.firebaseapp.com",
+  projectId: "siposena-laporan-situasi",
+  storageBucket: "siposena-laporan-situasi.firebasestorage.app",
+  messagingSenderId: "97593814637",
+  appId: "1:97593814637:web:295e7c30251198f80d1964",
+  measurementId: "G-B2Z9HDZHN8"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
