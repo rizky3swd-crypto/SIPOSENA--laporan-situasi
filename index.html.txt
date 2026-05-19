@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIPOSENA - Laporan Situasi Kampus IPDN Kalbar</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Google Fonts: Inter & Poppins -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+fontFamily: {
+sans: ['Inter', 'sans-serif'],
+poppins: ['Poppins', 'sans-serif'],
+},
+colors: {
+customBlue: {
+50: '#f0f5ff',
+100: '#e0eaff',
+200: '#c7d8ff',
+300: '#a3beff',
+400: '#7799ff',
+500: '#4d70ff',
+600: '#2544f1',
+700: '#1c31c8',
+800: '#1d2a9f',
+900: '#0f172a',
+navy: '#1e3a8a',
+}
+}
+}
+}
+}
+</script>
+
+<style>
+::-webkit-scrollbar {
+width: 6px;
+height: 6px;
+}
+::-webkit-scrollbar-track {
+background: #f1f5f9;
+}
+.dark ::-webkit-scrollbar-track {
+background: #1e293b;
+}
+::-webkit-scrollbar-thumb {
+background: #cbd5e1;
+border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+background: #475569;
+}
+::-webkit-scrollbar-thumb:hover {
+background: #94a3b8;
+}
+
+@media print {
+body {
+background: white !important;
+color: black !important;
+}
+.no-print {
+display: none !important;
+}
+.print-layout {
+display: block !important;
+background: white !important;
+color: black !important;
+padding: 0 !important;
+margin: 0 !important;
+box-shadow: none !important;
+border: none !important;
+}
+.print-table th {
+background-color: #f1f5f9 !important;
+color: black !important;
+border: 1px solid #000000 !important;
+}
+.print-table td {
+border: 1px solid #000000 !important;
+color: black !important;
+}
+}
+</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased transition-colors duration-250">
+
+<header class="bg-customBlue-navy dark:bg-slate-900 text-white sticky top-0 z-40 shadow-md no-print transition-colors duration-250">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="bg-white/10 p-2.5 rounded-xl shadow-lg border border-white/20">
+<svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+</svg>
+</div>
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-poppins font-extrabold text-xl tracking-wider text-white">SIPOSENA</span>
+<span class="bg-white/10 text-cyan-300 text-[9px] px-2 py-0.5 rounded font-mono font-bold border border-white/20">v3.9 Cloud Sync</span>
+</div>
+<p class="text-[9px] text-slate-300 tracking-widest uppercase font-bold font-poppins">IPDN KAMPUS KALIMANTAN BARAT</p>
+</div>
+</div>
+
+<div class="flex items-center space-x-3">
+<!-- Theme Toggle Button -->
+<button id="theme-toggle-btn" onclick="window.toggleTheme()" class="p-2.5 bg-white/10 hover:bg-white/20 rounded-xl border border-white/20 text-white shadow-lg focus:outline-none transition-all duration-200" title="Ubah Tema Warna">
+<i id="theme-toggle-icon" class="fa-solid fa-moon text-slate-100"></i>
+</button>
+
+<!-- Cloud Synchronization Status Indicator -->
+<div class="hidden sm:flex items-center space-x-2 bg-white/5 px-3.5 py-1.5 rounded-xl border border-white/10" id="sync-indicator">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-[10px] text-slate-200 font-bold tracking-wide" id="sync-text">Cloud Auto-Save Aktif</span>
+</div>
+</div>
+</div>
+</header>
+
+<!-- Custom Floating Toast Notifications -->
+<div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col space-y-2 pointer-events-none max-w-sm w-full no-print"></div>
+
+<!-- Main Interactive Dashboard Container -->
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full no-print">
+
+<!-- Welcome banner with live Vector SVG Illustration of the campus -->
+<div class="relative bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800 p-6 rounded-2xl border border-blue-200/60 dark:border-slate-700 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 overflow-hidden shadow-sm transition-colors duration-250">
+
+<!-- High-Fidelity Vector SVG Drawing of the actual IPDN Kalbar Campus Building -->
+<div class="absolute inset-0 w-full h-full pointer-events-none opacity-20 dark:opacity-10 select-none">
+<svg class="w-full h-full" viewBox="0 0 900 280" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+<!-- Sky & Ground -->
+<rect width="900" height="280" fill="transparent"/>
+
+<!-- Main Building Base Block -->
+<rect x="150" y="140" width="600" height="90" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+<rect x="250" y="110" width="400" height="30" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+
+<!-- Left Wing Gable Atap Segitiga -->
+<path d="M130 140 L250 140 L190 90 Z" fill="#334155" stroke="#1e293b" stroke-width="2"/>
+<path d="M140 140 L240 140 L190 98 Z" fill="#f1f5f9"/>
+
+<!-- Right Wing Gable Atap Segitiga -->
+<path d="M650 140 L770 140 L710 90 Z" fill="#334155" stroke="#1e293b" stroke-width="2"/>
+<path d="M660 140 L760 140 L710 98 Z" fill="#f1f5f9"/>
+
+<!-- Main Center Tri-Roof Front Gable -->
+<path d="M370 110 L530 110 L450 60 Z" fill="#334155" stroke="#1e293b" stroke-width="2"/>
+<path d="M380 110 L520 110 L450 68 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+
+<!-- Center Portico Pillars -->
+<rect x="400" y="110" width="15" height="120" fill="#cbd5e1"/>
+<rect x="485" y="110" width="15" height="120" fill="#cbd5e1"/>
+<rect x="425" y="110" width="10" height="120" fill="#e2e8f0"/>
+<rect x="465" y="110" width="10" height="120" fill="#e2e8f0"/>
+
+<!-- Windows Grid Left Wing -->
+<rect x="270" y="150" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+<rect x="295" y="150" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+<rect x="320" y="150" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+<rect x="270" y="185" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+<rect x="295" y="185" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+<rect x="320" y="185" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+
+<!-- Windows Grid Right Wing -->
+<rect x="565" y="150" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+<rect x="590" y="150" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+<rect x="615" y="150" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+<rect x="565" y="185" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+<rect x="590" y="185" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+<rect x="615" y="185" width="15" height="25" rx="2" fill="#1e293b" opacity="0.8"/>
+
+<!-- IPDN Circle Emblem on Central Front -->
+<circle cx="450" cy="92" r="8" fill="#b91c1c"/>
+<circle cx="450" cy="92" r="6" fill="#fbbf24"/>
+
+<!-- Front Flagpole & Indonesian flag -->
+<line x1="450" y1="230" x2="450" y2="40" stroke="#cbd5e1" stroke-width="3"/>
+<path d="M450 40 L480 47 L450 54 Z" fill="#ef4444"/>
+<path d="M450 54 L480 47 L480 54 L450 61 Z" fill="#ffffff"/>
+</svg>
+</div>
+
+<!-- Background Image overlay -->
+<div class="absolute inset-0 bg-cover bg-center opacity-40 pointer-events-none mix-blend-overlay" style="background-image: url('banner.jpg');"></div>
+
+<div class="relative z-10 space-y-1">
+<span class="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase tracking-widest flex items-center">
+<i class="fa-solid fa-circle-nodes mr-2 animate-pulse"></i>Sistem Laporan Pengasuhan
+</span>
+<h1 class="text-xl sm:text-2xl font-poppins font-bold text-slate-900 dark:text-white tracking-wide">Laporan Jaga Posko & Situasi Kampus</h1>
+<p class="text-xs text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">Kelola data dinas harian pengasuhan, kekuatan praja, rincian situasi per kegiatan, serta ekspor rekapitulasi harian utuh secara instan ke Microsoft Word.</p>
+</div>
+<div class="relative z-10 flex items-center space-x-2 bg-white/90 dark:bg-slate-800/90 p-3 rounded-xl border border-blue-200 dark:border-slate-700 self-start md:self-auto shrink-0 shadow-sm backdrop-blur-sm">
+<i class="fa-solid fa-file-invoice text-blue-700 dark:text-blue-400 text-lg"></i>
+<div class="text-left">
+<p class="text-[10px] text-slate-500 dark:text-slate-400">Total Kegiatan Tersimpan</p>
+<p class="text-xs font-bold text-slate-900 dark:text-white animate-pulse" id="stats-total-reports">0 Kegiatan</p>
+</div>
+</div>
+</div>
+
+<!-- Split Grid: Side-by-side on desktop (5 cols for form, 7 cols for results) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+<!-- LEFT COLUMN: INPUT FORM -->
+<section class="lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6 transition-colors duration-250">
+<div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+<div>
+<h2 class="font-poppins font-bold text-base text-slate-900 dark:text-white flex items-center">
+<i class="fa-solid fa-pen-to-square text-blue-600 dark:text-blue-400 mr-2.5"></i>Buat Laporan Baru
+</h2>
+<p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Format Resmi IPDN Kampus Kalimantan Barat.</p>
+</div>
+</div>
+
+<form id="lapsit-form" onsubmit="window.handleFormSubmit(event)" class="space-y-4">
+
+<!-- Date Input -->
+<div>
+<label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5" id="label-date">
+Tanggal Kegiatan <span class="text-blue-600 dark:text-blue-400">*</span>
+</label>
+<input type="date" id="form-date" required class="w-full bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition">
+</div>
+
+<!-- IPDN Specific Fields -->
+<div id="ipdn-fields" class="space-y-4 pt-2">
+<div class="bg-slate-50/50 dark:bg-slate-850 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-3">
+<h3 class="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wider flex items-center">
+<i class="fa-solid fa-user-shield mr-2"></i>Petugas Piket Posko Pengasuhan
+</h3>
+<div>
+<label class="block text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Koordinator Jaga</label>
+<!-- UPDATED PLACEHOLDER TO REQUESTED NAME -->
+<input type="text" id="form-piket-koor" placeholder="Contoh: Poiman salfin halawa, S.STP. M.Si" class="w-full bg-white dark:bg-slate-800 border border-slate-250 dark:border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500 transition">
+</div>
+<div>
+<label class="block text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Sekretaris Jaga</label>
+<input type="text" id="form-piket-sekretaris" placeholder="Contoh: Bambang Saputra" class="w-full bg-white dark:bg-slate-800 border border-slate-250 dark:border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500 transition">
+</div>
+<div>
+<label class="block text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Anggota Jaga</label>
+<input type="text" id="form-piket-anggota" placeholder="Contoh: Syahrul Wahyudi, S.Tr.IP" class="w-full bg-white dark:bg-slate-800 border border-slate-250 dark:border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500 transition">
+</div>
+</div>
+
+<!-- Mini Table Editor for Praja strength -->
+<div class="bg-slate-50/50 dark:bg-slate-850 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-3">
+<div class="flex justify-between items-center">
+<h3 class="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wider flex items-center">
+<i class="fa-solid fa-users mr-2"></i>Kekuatan Personil Praja
+</h3>
+<button type="button" onclick="window.loadDefaultPrajaStats()" class="text-[9px] text-blue-600 dark:text-blue-400 hover:underline font-bold">
+<i class="fa-solid fa-rotate mr-1"></i>Reset Default (148 Praja)
+</button>
+</div>
+
+<!-- Simple Grid Inputs for Strength -->
+<div class="grid grid-cols-3 gap-2 text-center">
+<div class="bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase">Total L/P</span>
+<div class="flex space-x-1 mt-1 justify-center">
+<input type="number" id="form-total-l" placeholder="L" class="w-10 bg-slate-50 dark:bg-slate-700 text-center rounded text-xs py-1 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500">
+<input type="number" id="form-total-p" placeholder="P" class="w-10 bg-slate-50 dark:bg-slate-700 text-center rounded text-xs py-1 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500">
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase">Hadir L/P</span>
+<div class="flex space-x-1 mt-1 justify-center">
+<input type="number" id="form-hadir-l" placeholder="L" class="w-10 bg-slate-50 dark:bg-slate-700 text-center rounded text-xs py-1 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500">
+<input type="number" id="form-hadir-p" placeholder="P" class="w-10 bg-slate-50 dark:bg-slate-700 text-center rounded text-xs py-1 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500">
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase">Kurang L/P</span>
+<div class="flex space-x-1 mt-1 justify-center">
+<input type="number" id="form-kurang-l" placeholder="L" class="w-10 bg-slate-50 dark:bg-slate-700 text-center rounded text-xs py-1 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500">
+<input type="number" id="form-kurang-p" placeholder="P" class="w-10 bg-slate-50 dark:bg-slate-700 text-center rounded text-xs py-1 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500">
+</div>
+</div>
+</div>
+
+<div class="grid grid-cols-4 gap-1 text-center">
+<div class="bg-white dark:bg-slate-800 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="text-[8px] text-slate-500 dark:text-slate-400 font-bold uppercase">Dinas Dalam</span>
+<input type="number" id="form-stat-dd" placeholder="0" class="w-full mt-1 bg-slate-50 dark:bg-slate-700 text-center rounded text-xs py-1 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500">
+</div>
+<div class="bg-white dark:bg-slate-800 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="text-[8px] text-slate-500 dark:text-slate-400 font-bold uppercase">Sakit</span>
+<input type="number" id="form-stat-sakit" placeholder="0" class="w-full mt-1 bg-slate-50 dark:bg-slate-700 text-center rounded text-xs py-1 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500">
+</div>
+<div class="bg-white dark:bg-slate-800 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="text-[8px] text-slate-500 dark:text-slate-400 font-bold uppercase">Ijin</span>
+<input type="number" id="form-stat-ijin" placeholder="0" class="w-full mt-1 bg-slate-50 dark:bg-slate-700 text-center rounded text-xs py-1 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500">
+</div>
+<div class="bg-white dark:bg-slate-800 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="text-[8px] text-slate-500 dark:text-slate-400 font-bold uppercase">TK / DL</span>
+<input type="number" id="form-stat-tk" placeholder="0" class="w-full mt-1 bg-slate-50 dark:bg-slate-700 text-center rounded text-xs py-1 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500">
+</div>
+</div>
+</div>
+
+<!-- Template Helper Dropdown -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<label class="block text-[10px] font-bold text-blue-700 dark:text-blue-450 uppercase tracking-wider">Nama Kegiatan Pengasuhan</label>
+<span class="text-[9px] text-slate-500 dark:text-slate-400 font-medium">Klik pilihan untuk isi otomatis</span>
+</div>
+<select id="form-activity-select" onchange="window.autoFillIpdnActivityTemplate()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500">
+<option value="">-- Pilih Jenis Kegiatan IPDN --</option>
+<option value="Ibadah">1. Ibadah (Shubuh/Dinas)</option>
+<option value="Aerobik Pagi">2. Aerobik Pagi</option>
+<option value="Pembersihan Mandiri">3. Pembersihan Mandiri</option>
+<option value="Up. Makan Pagi">4. Up. Makan Pagi</option>
+<option value="Apel Dharma Dan Pengecekan PUDD Wisma Setelah IBL">5. Apel Dharma & Pengecekan PUDD Wisma (Pasca IBL)</option>
+<option value="Pergerakan Menuju Kelas">6. Pergerakan Menuju Kelas</option>
+<option value="Perkuliahan">7. Perkuliahan Akademik</option>
+<option value="Up. Makan Siang">8. Up. Makan Siang</option>
+<option value="Pengecekan Sore">9. Pengecekan Sore (Public Speaking 5-10 mnt)</option>
+<option value="Kegiatan Mandiri Minat dan Bakat">10. Kegiatan Mandiri Minat & Bakat (Getsemani)</option>
+<option value="Up. Makan Malam">11. Up. Makan Malam</option>
+<option value="Kerohanian">12. Kegiatan Kerohanian Malam</option>
+<option value="Apel Malam">13. Apel Malam</option>
+<option value="Apel Pelepasan Pesiar">14. Apel Pelepasan Pesiar</option>
+<option value="Apel Penerimaan Pesiar">15. Apel Penerimaan Pesiar</option>
+<option value="Apel Sena">16. Apel Sena</option>
+<option value="Upacara Civitas Akademika">17. Upacara Civitas Akademika</option>
+<option value="Apel Wira">18. Apel Wira</option>
+<option value="Apel Dharma">19. Apel Dharma (Malam)</option>
+</select>
+</div>
+</div>
+
+<!-- Personnel & Detail Report Textarea -->
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider" id="label-textarea">
+Rincian Detail Personil Dinas / Keterangan <span class="text-blue-600 dark:text-blue-400">*</span>
+</label>
+<button type="button" id="btn-load-template" onclick="window.insertSampleText()" class="text-[9px] text-blue-600 dark:text-blue-400 hover:underline font-bold">
+<i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Muat Contoh Teks
+</button>
+</div>
+<textarea id="form-personnel" required rows="5" placeholder="Tulis rincian personil dinas, status kesiapan, kekuatan anggota, lokasi tugas, maupun situasi keamanan saat ini..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 transition leading-relaxed"></textarea>
+</div>
+
+<!-- ✨ GEMINI AI INTUITIVE CONTROL PANEL ✨ -->
+<div class="bg-blue-50/50 dark:bg-slate-850 p-4 rounded-2xl border border-blue-200 dark:border-slate-700 space-y-3 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-bold text-blue-800 dark:text-blue-400 uppercase tracking-widest flex items-center">
+<i class="fa-solid fa-brain mr-2 animate-bounce"></i>✨ AI Asisten Piket Jaga (Gemini)
+</span>
+<span class="text-[8px] bg-blue-600/10 dark:bg-blue-400/10 text-blue-800 dark:text-blue-400 px-2 py-0.5 rounded border border-blue-600/20 font-mono">2.5 Flash</span>
+</div>
+
+<div class="grid grid-cols-2 gap-2">
+<button type="button" onclick="window.optimizeReportWithAI()" class="py-2 px-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-755 border border-blue-200 dark:border-slate-700 rounded-xl text-[11px] font-semibold text-slate-700 dark:text-slate-200 shadow-sm transition duration-150 flex items-center justify-center space-x-1">
+<i class="fa-solid fa-magic text-blue-600 dark:text-blue-400"></i>
+<span>✨ Format Dinas Baku</span>
+</button>
+<button type="button" onclick="window.analyzeReportWithAI()" class="py-2 px-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-755 border border-blue-200 dark:border-slate-700 rounded-xl text-[11px] font-semibold text-slate-700 dark:text-slate-200 shadow-sm transition duration-150 flex items-center justify-center space-x-1">
+<i class="fa-solid fa-shield-halved text-blue-600 dark:text-blue-400"></i>
+<span>✨ Analisis Kerawanan</span>
+</button>
+</div>
+
+<!-- AI Loading Indicator -->
+<div id="ai-loading" class="hidden flex items-center justify-center space-x-2 py-2 text-xs text-blue-600 dark:text-blue-400 font-semibold animate-pulse">
+<i class="fa-solid fa-spinner animate-spin"></i>
+<span>Menghubungi Server Kecerdasan Buatan...</span>
+</div>
+
+<!-- AI Suggestion/Analysis Output Box -->
+<div id="ai-suggestion-box" class="hidden text-[11px] bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line shadow-inner max-h-48 overflow-y-auto">
+</div>
+</div>
+
+<!-- Smart Image Uploader with Compressor -->
+<div>
+<label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+Dokumentasi Foto Kegiatan <span class="text-blue-600 dark:text-blue-400">*</span>
+</label>
+<div class="mt-1 flex justify-center px-4 pt-4 pb-5 border-2 border-slate-200 dark:border-slate-700 border-dashed rounded-2xl hover:border-blue-500/30 transition bg-slate-50/50 dark:bg-slate-850">
+<div class="space-y-2 text-center">
+<div class="mx-auto h-8 w-8 text-blue-600 dark:text-blue-400" id="uploader-icon-area">
+<i class="fa-solid fa-cloud-arrow-up text-xl"></i>
+</div>
+<div class="flex text-xs text-slate-500 dark:text-slate-400 justify-center">
+<label for="form-image" class="relative cursor-pointer bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-blue-600 dark:text-blue-400 px-3.5 py-1.5 rounded-lg border border-slate-250 dark:border-slate-700 font-bold text-[11px] shadow-sm focus-within:outline-none transition">
+<span>Pilih File Gambar</span>
+<input id="form-image" type="file" accept="image/*" class="sr-only" onchange="window.compressAndPreviewImage(event)">
+</label>
+</div>
+<p class="text-[9px] text-slate-500 dark:text-slate-400">Mendukung kamera HP (Ukuran file otomatis dikompresi langsung)</p>
+</div>
+</div>
+
+<!-- Compressor Output Stats & Preview Pane -->
+<div id="compression-success-box" class="hidden mt-3 bg-slate-50 dark:bg-slate-850 border border-emerald-500/20 rounded-xl p-3.5">
+<div class="flex items-start space-x-2.5">
+<div class="w-7 h-7 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 text-xs mt-0.5">
+<i class="fa-solid fa-circle-check"></i>
+</div>
+<div class="flex-grow">
+<h4 class="text-[11px] font-bold text-slate-800 dark:text-slate-200">Kompresi Berhasil (Browser-level)</h4>
+<p class="text-[9px] text-slate-500 dark:text-slate-400 mt-0.5">
+Asli: <span id="original-size" class="font-bold text-slate-700 dark:text-slate-300">0 MB</span> •
+Hasil: <span id="compressed-size" class="font-bold text-emerald-600 dark:text-emerald-400">0 KB</span>
+(<span id="savings-percent" class="font-bold text-emerald-600 dark:text-emerald-400">0% Hemat</span>)
+</p>
+</div>
+</div>
+<div class="mt-3 flex justify-center">
+<div class="relative">
+<img id="image-preview" src="" alt="Preview LAPSIT" class="max-h-36 rounded-lg border border-slate-200 dark:border-slate-700 shadow-md">
+<button type="button" onclick="window.removeSelectedImage()" class="absolute -top-1.5 -right-1.5 bg-red-600 hover:bg-red-500 text-white rounded-full p-1.5 shadow-md text-[9px] transition">
+<i class="fa-solid fa-trash-can"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Submit Button -->
+<button type="submit" class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold rounded-xl shadow-md transition duration-150 transform hover:-translate-y-0.5 flex items-center justify-center space-x-2 text-xs sm:text-sm">
+<i class="fa-solid fa-paper-plane"></i>
+<span id="btn-submit-text">Kirim Laporan Resmi IPDN</span>
+</button>
+</form>
+</section>
+
+<!-- RIGHT COLUMN: RESULTS LIST -->
+<section class="lg:col-span-7 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6 transition-colors duration-250">
+
+<!-- Tab Switching Navigation -->
+<div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+<div class="flex space-x-1 bg-slate-50 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+<button type="button" id="tab-btn-all" onclick="window.switchRightTab('all')" class="py-2 px-4 text-xs font-bold rounded-lg transition duration-150 bg-blue-600 text-white shadow-sm">
+<i class="fa-solid fa-list-check mr-1.5"></i>Semua Kegiatan
+</button>
+<button type="button" id="tab-btn-daily" onclick="window.switchRightTab('daily')" class="py-2 px-4 text-xs font-bold rounded-lg transition duration-150 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200">
+<i class="fa-solid fa-calendar-check mr-1.5"></i>Rekap Harian (1 Hari)
+</button>
+</div>
+<!-- Quick Search Bar -->
+<div class="relative w-48 sm:w-56" id="search-bar-container">
+<input type="text" id="result-search" oninput="window.applyFilters()" placeholder="Cari laporan..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-500 transition">
+<i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-[10px]"></i>
+</div>
+</div>
+
+<!-- ALL ACTIVITIES TAB -->
+<div id="tab-content-all" class="space-y-4">
+<div id="results-container" class="space-y-4 max-h-[600px] overflow-y-auto pr-1">
+<!-- Filled dynamically with reports by JS -->
+</div>
+</div>
+
+<!-- DAILY RECAP TAB (1 Day Consolidation) -->
+<div id="tab-content-daily" class="hidden space-y-4">
+<div class="bg-blue-50/50 dark:bg-slate-800/50 p-4 rounded-xl border border-blue-200/50 dark:border-slate-700 mb-2">
+<p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+Sistem secara otomatis mendeteksi dan mengelompokkan kegiatan berdasarkan tanggal yang sama. Anda dapat mengunduh seluruh kegiatan dalam satu hari penuh ke dalam **satu dokumen Word terpadu**.
+</p>
+</div>
+<div id="daily-recaps-container" class="space-y-4 max-h-[500px] overflow-y-auto pr-1">
+<!-- Filled dynamically with consolidated days -->
+</div>
+</div>
+
+<!-- Empty State -->
+<div id="empty-state" class="hidden py-16 text-center text-slate-400 dark:text-slate-500">
+<i class="fa-solid fa-folder-open text-4xl text-slate-300 dark:text-slate-700 mb-3"></i>
+<p class="text-sm font-semibold text-slate-500">Belum Ada Laporan Tersimpan</p>
+<p class="text-xs text-slate-400 mt-1">Gunakan formulir di sebelah kiri untuk mengirim laporan pertama Anda.</p>
+</div>
+</section>
+
+</div>
+</main>
+
+<!-- Detailed Modal with IPDN Kop Surat & Print/Export Capability -->
+<div id="detail-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-sm p-2 sm:p-4 overflow-y-auto">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-3xl rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[95vh] transition-colors duration-250">
+<!-- Modal Header (Controls) -->
+<div class="p-4 border-b border-slate-150 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-850 no-print">
+<span class="text-xs font-bold text-blue-800 dark:text-blue-400 font-poppins flex items-center">
+<i class="fa-solid fa-circle-info mr-1.5"></i>Tinjauan Laporan Resmi IPDN
+</span>
+<div class="flex items-center space-x-2">
+<!-- Export Word Button -->
+<button onclick="window.exportCurrentReportToWord()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg flex items-center space-x-1.5 transition">
+<i class="fa-solid fa-file-word"></i>
+<span>Ekspor Word</span>
+</button>
+<!-- Print Button -->
+<button onclick="window.print()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-750 text-white font-bold text-xs rounded-lg flex items-center space-x-1.5 transition">
+<i class="fa-solid fa-print"></i>
+<span>Cetak / PDF</span>
+</button>
+<button onclick="window.closeDetailModal()" class="text-slate-500 hover:text-slate-800 p-1.5 rounded-lg bg-slate-200/50 dark:bg-slate-800 dark:text-slate-400">
+<i class="fa-solid fa-xmark text-sm"></i>
+</button>
+</div>
+</div>
+
+<!-- Printable Layout Area -->
+<div class="p-6 sm:p-8 overflow-y-auto bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 print-layout flex-grow space-y-5">
+
+<!-- Kop Surat Dinas IPDN -->
+<div id="modal-kop-surat" class="text-center">
+<div class="text-center leading-tight">
+<h2 class="text-sm font-semibold tracking-wide text-slate-900 dark:text-slate-100" style="font-family: 'Times New Roman', Times, serif;">KEMENTERIAN DALAM NEGERI</h2>
+<h3 class="text-xs font-semibold tracking-wide text-slate-800 dark:text-slate-200" style="font-family: 'Times New Roman', Times, serif;">REPUBLIK INDONESIA</h3>
+<h1 class="text-base font-black tracking-wide text-black dark:text-white mt-0.5" style="font-family: 'Times New Roman', Times, serif; font-size: 16px;">INSTITUT PEMERINTAHAN DALAM NEGERI</h1>
+<h2 class="text-xs font-bold tracking-wider text-slate-900 dark:text-slate-100" style="font-family: 'Times New Roman', Times, serif; font-size: 11px;">KAMPUS KALIMANTAN BARAT</h2>
+<p class="text-[9px] text-slate-700 dark:text-slate-300 mt-1 font-normal" style="font-family: 'Times New Roman', Times, serif; font-size: 9px;">
+Jl. Raya Pontianak – Mempawah, Desa Sungai Purun Besar, Kecamatan Segedong,<br>
+Kabupaten Mempawah, Kode Pos 78351, <span class="italic">Website http://www.ipdnkalbar.ac.id</span>
+</p>
+</div>
+
+<!-- Line separator: double black border -->
+<div class="border-b-4 border-double border-black dark:border-slate-100 mt-3 mb-4"></div>
+
+<!-- Title Under KOP -->
+<div class="text-center py-2">
+<h2 class="text-sm font-bold uppercase tracking-wider text-black dark:text-white" style="font-family: 'Times New Roman', Times, serif; text-decoration: underline; text-underline-offset: 4px;">
+LAPORAN KEGIATAN HARIAN PENGASUHAN
+</h2>
+<h2 class="text-xs font-bold uppercase tracking-wider text-black dark:text-white mt-1" style="font-family: 'Times New Roman', Times, serif; text-decoration: underline; text-underline-offset: 4px;">
+IPDN KAMPUS KALIMANTAN BARAT
+</h2>
+</div>
+</div>
+
+<!-- Piket Jaga Info Table -->
+<div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
+<table class="w-full text-xs text-left">
+<tr>
+<td class="w-28 font-bold text-slate-700 dark:text-slate-300 py-0.5" style="font-family: 'Times New Roman', Times, serif;">Hari / Tanggal</td>
+<td class="text-slate-950 dark:text-slate-100 py-0.5" style="font-family: 'Times New Roman', Times, serif;">: <span id="modal-date" class="font-semibold"></span></td>
+</tr>
+<tr id="modal-row-koor">
+<td class="font-bold text-slate-700 dark:text-slate-300 py-0.5" style="font-family: 'Times New Roman', Times, serif;">Koordinator Jaga</td>
+<td class="text-slate-950 dark:text-slate-100 py-0.5" style="font-family: 'Times New Roman', Times, serif;">: <span id="modal-koor" class="font-semibold"></span></td>
+</tr>
+<tr id="modal-row-sekretaris">
+<td class="font-bold text-slate-700 dark:text-slate-300 py-0.5" style="font-family: 'Times New Roman', Times, serif;">Sekretaris Jaga</td>
+<td class="text-slate-950 dark:text-slate-100 py-0.5" style="font-family: 'Times New Roman', Times, serif;">: <span id="modal-sekretaris" class="font-semibold"></span></td>
+</tr>
+<tr id="modal-row-anggota">
+<td class="font-bold text-slate-700 dark:text-slate-300 py-0.5" style="font-family: 'Times New Roman', Times, serif;">Anggota Jaga</td>
+<td class="text-slate-950 dark:text-slate-100 py-0.5" style="font-family: 'Times New Roman', Times, serif;">: <span id="modal-anggota" class="font-semibold"></span></td>
+</tr>
+</table>
+</div>
+
+<!-- Praja Strength Table -->
+<div id="modal-strength-section" class="space-y-1.5">
+<h4 class="text-xs font-extrabold text-black dark:text-white uppercase tracking-wide" style="font-family: 'Times New Roman', Times, serif;"><i class="fa-solid fa-users mr-1"></i> I. Laporan Kekuatan Personil Praja</h4>
+<table class="w-full text-left text-[11px] border-collapse border border-black dark:border-slate-750 print-table" style="font-family: 'Times New Roman', Times, serif;">
+<thead>
+<tr class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-bold">
+<th class="border border-black dark:border-slate-750 p-1 text-center">Jenis Kelamin</th>
+<th class="border border-black dark:border-slate-750 p-1 text-center">Jumlah</th>
+<th class="border border-black dark:border-slate-750 p-1 text-center">Kurang</th>
+<th class="border border-black dark:border-slate-750 p-1 text-center">Hadir</th>
+<th class="border border-black dark:border-slate-750 p-1 text-center">Dinas Dalam (DD)</th>
+<th class="border border-black dark:border-slate-750 p-1 text-center">Sakit</th>
+<th class="border border-black dark:border-slate-750 p-1 text-center">Ijin</th>
+<th class="border border-black dark:border-slate-750 p-1 text-center">TK/DL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="border border-black dark:border-slate-750 p-1 text-center font-semibold">Laki-laki (L)</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" id="td-total-l">0</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" id="td-kurang-l">0</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" id="td-hadir-l">0</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" rowspan="3" id="td-dd">0</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" rowspan="3" id="td-sakit">0</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" rowspan="3" id="td-ijin">0</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" rowspan="3" id="td-tk">0</td>
+</tr>
+<tr>
+<td class="border border-black dark:border-slate-750 p-1 text-center font-semibold">Perempuan (P)</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" id="td-total-p">0</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" id="td-kurang-p">0</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" id="td-hadir-p">0</td>
+</tr>
+<tr class="bg-slate-50 dark:bg-slate-800 font-bold">
+<td class="border border-black dark:border-slate-750 p-1 text-center">TOTAL</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" id="td-total-all">0</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" id="td-kurang-all">0</td>
+<td class="border border-black dark:border-slate-750 p-1 text-center" id="td-hadir-all">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- Report Details Text -->
+<div class="space-y-1.5">
+<h4 class="text-xs font-extrabold text-black dark:text-white uppercase tracking-wide" style="font-family: 'Times New Roman', Times, serif;"><i class="fa-solid fa-circle-info mr-1"></i> II. Rincian Kegiatan & Laporan Situasi</h4>
+<div class="p-4 bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 rounded-lg text-xs leading-relaxed text-slate-900 dark:text-slate-100 whitespace-pre-line" id="modal-personnel" style="font-family: 'Times New Roman', Times, serif;"></div>
+</div>
+
+<!-- Documentation Attachment -->
+<div class="space-y-1.5">
+<h4 class="text-xs font-extrabold text-black dark:text-white uppercase tracking-wide" style="font-family: 'Times New Roman', Times, serif;"><i class="fa-solid fa-camera mr-1"></i> III. Lampiran Dokumentasi Kegiatan</h4>
+<div class="w-full flex justify-center border border-slate-200 dark:border-slate-750 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-800 p-2">
+<img id="modal-img" src="" alt="Dokumentasi Lapsit" class="max-h-96 object-contain rounded-lg shadow-sm">
+</div>
+</div>
+
+<!-- Official Signature Block (Poiman Salfin Halawa Re-populated) -->
+<div class="pt-6 flex justify-end text-xs" id="modal-signature-block">
+<div class="text-center space-y-12" style="font-family: 'Times New Roman', Times, serif;">
+<div class="space-y-1 text-slate-800 dark:text-slate-200 text-[11px]">
+<p>Kepala Satuan Sena Praja</p>
+<p>IPDN Kampus Kalimantan Barat,</p>
+</div>
+<div class="space-y-0.5 text-[11px]">
+<div class="py-3"></div>
+<!-- UPDATED OFFICIAL SIGNATURE FORMAT -->
+<p class="font-bold text-black dark:text-white underline">Poiman salfin halawa, S.STP. M.Si</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400">Penata Tk. I (III/d)</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400">NIP. 199003132012061001</p>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- Modal Footer (No Print Area) -->
+<div class="p-3 border-t border-slate-150 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 flex justify-end space-x-2 no-print">
+<button onclick="window.exportCurrentReportToWord()" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition flex items-center space-x-1">
+<i class="fa-solid fa-file-word"></i>
+<span>Ekspor Word</span>
+</button>
+<button onclick="window.print()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-750 text-white font-bold text-xs rounded-xl transition flex items-center space-x-1">
+<i class="fa-solid fa-print"></i>
+<span>Cetak PDF</span>
+</button>
+<button onclick="window.closeDetailModal()" class="px-4 py-1.5 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 text-slate-700 font-bold text-xs rounded-xl transition">
+Tutup
+</button>
+</div>
+</div>
+</div>
+
+<!-- CUSTOM CONFIRM DELETE MODAL -->
+<div id="confirm-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-sm p-4 no-print">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-xl max-w-sm w-full space-y-4 text-center">
+<div class="mx-auto w-12 h-12 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center text-xl mb-2">
+<i class="fa-solid fa-triangle-exclamation"></i>
+</div>
+<div class="space-y-1">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white">Konfirmasi Hapus Laporan</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Apakah Anda yakin ingin menghapus laporan situasi ini secara permanen?</p>
+</div>
+<div class="flex justify-center space-x-2 text-xs pt-1">
+<button onclick="window.closeConfirmModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 rounded-xl font-semibold transition">Batal</button>
+<button onclick="window.executeDeleteReport()" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-xl font-semibold transition">Ya, Hapus</button>
+</div>
+</div>
+</div>
+
+<!-- Simple Footer -->
+<footer class="bg-slate-100 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-5 text-center text-[10px] text-slate-500 dark:text-slate-400 no-print transition-colors duration-250">
+<div class="max-w-7xl mx-auto px-4 space-y-1">
+<p><strong>SIPOSENA IPDN KALBAR</strong> - Platform Digital Laporan Situasi Kampus Terintegrasi.</p>
+<p class="text-slate-400 dark:text-slate-500">Sistem kompresi otomatis lokal & Cloud Auto-Save Engine.</p>
+</div>
+</footer>
+
+<!-- Firebase SDK Imports for Auto-Saving & Syncing -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+// Global State & Database variables
+let lapsitDatabase = [
+{
+id: 1,
+date: "2026-05-18",
+piketKoor: "Poiman salfin halawa, S.STP. M.Si",
+piketSekretaris: "Bambang Saputra",
+piketAnggota: "Syahrul Wahyudi, S.Tr.IP",
+personnel: "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Apel Dharma Dan Pengecekan PUDD Wisma Setelah IBL\n\nWaktu: Pukul 17.00 - 18.00 WIB\n\nRincian Pelaksanaan:\n1. Melaksanakan apel sore gabungan dalam rangka penerimaan kembali praja pasca pelaksanaan Izin Bermalam Luar (IBL).\n2. Melakukan pemeriksaan ketat terhadap kelengkapan PUDD (Peraturan Urusan Dinas Dalam) di seluruh Wisma Praja Putra dan Putri.\n3. Kebersihan barak, penataan lemari pakaian, dan kerapihan tempat tidur dinilai sangat baik.\n4. Seluruh praja kembali tepat waktu tanpa adanya keterlambatan yang menonjol.",
+image: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=800",
+stats: {
+totalL: 106, totalP: 42,
+hadirL: 106, hadirP: 42,
+kurangL: 0, kurangP: 0,
+dd: 10, sakit: 0, ijin: 0, tk: 0
+}
+},
+{
+id: 2,
+date: "2026-05-18",
+piketKoor: "Poiman salfin halawa, S.STP. M.Si",
+piketSekretaris: "Bambang Saputra",
+piketAnggota: "Syahrul Wahyudi, S.Tr.IP",
+personnel: "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Pengecekan Sore (Latihan Public Speaking)\n\nWaktu: Pukul 16.00 - 17.00 WIB\n\nRincian Pelaksanaan:\n1. Praja dikumpulkan di serambi barak untuk melaksanakan kegiatan Pengecekan Sore harian.\n2. Dilaksanakan latihan peningkatan kapasitas diri mandiri berupa Public Speaking secara bergiliran selama 5 s.d. 10 menit per perwakilan Praja.\n3. Topik yang dibahas seputar etika kepemimpinan Pamong Praja dan wawasan kebangsaan daerah perbatasan Kalbar.\n4. Situasi berjalan aman, komunikatif, dan tertib.",
+image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=800",
+stats: {
+totalL: 106, totalP: 42,
+hadirL: 106, hadirP: 42,
+kurangL: 0, kurangP: 0,
+dd: 10, sakit: 0, ijin: 0, tk: 0
+}
+},
+{
+id: 3,
+date: "2026-05-18",
+piketKoor: "Poiman salfin halawa, S.STP. M.Si",
+piketSekretaris: "Bambang Saputra",
+piketAnggota: "Syahrul Wahyudi, S.Tr.IP",
+personnel: "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Kegiatan Mandiri Minat dan Bakat (Praja Nasrani)\n\nWaktu: Pukul 13.00 - 15.30 WIB\n\nRincian Pelaksanaan:\n1. Praja beragama Nasrani melaksanakan kegiatan pengabdian masyarakat mandiri dan pembinement rohani di Panti Asuhan Getsemani Pontianak.\n2. Penyerahan bantuan logistik sosial dan interaksi edukatif bersama anak-anak panti asuhan berjalan khidmat.\n3. Pengawasan melekat dilaksanakan oleh Pengasuh Piket harian.\n4. Pergerakan pergi dan kembali menggunakan bus kampus dalam kondisi aman.",
+image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800",
+stats: {
+totalL: 106, totalP: 42,
+hadirL: 106, hadirP: 42,
+kurangL: 0, kurangP: 0,
+dd: 10, sakit: 0, ijin: 0, tk: 0
+}
+}
+];
+
+let activeTab = 'all';
+let currentlySelectedModalReportId = null;
+let selectedCompressedImageBase64 = null;
+let originalSizeInMB = 0;
+let compressedSizeInKB = 0;
+let reportIdToDelete = null;
+
+// Firebase Initialization Credentials & Safe Path Definitions (RULE 1)
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'lapsit-ipdn-kalbar';
+let db = null;
+let auth = null;
+let reportsCollectionRef = null;
+
+if (typeof __firebase_config !== 'undefined') {
+try {
+const firebaseConfig = JSON.parse(__firebase_config);
+const app = initializeApp(firebaseConfig);
+db = getFirestore(app);
+auth = getAuth(app);
+reportsCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'reports');
+} catch (err) {
+console.error("Firebase Init Error: ", err);
+}
+}
+
+// Dark/Night Mode Controller Logic
+function initializeTheme() {
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+document.documentElement.classList.add('dark');
+updateThemeToggleIcon(true);
+} else {
+document.documentElement.classList.remove('dark');
+updateThemeToggleIcon(false);
+}
+}
+
+function toggleTheme() {
+const html = document.documentElement;
+if (html.classList.contains('dark')) {
+html.classList.remove('dark');
+localStorage.setItem('theme', 'light');
+updateThemeToggleIcon(false);
+showToast("Mode terang aktif", "success");
+} else {
+html.classList.add('dark');
+localStorage.setItem('theme', 'dark');
+updateThemeToggleIcon(true);
+showToast("Mode malam aktif", "success");
+}
+}
+
+function updateThemeToggleIcon(isDark) {
+const icon = document.getElementById('theme-toggle-icon');
+if (isDark) {
+icon.className = "fa-solid fa-sun text-amber-400";
+} else {
+icon.className = "fa-solid fa-moon text-slate-100";
+}
+}
+
+// Load Default Praja Statistics (IPDN Kalbar standard: 148 Praja)
+function loadDefaultPrajaStats() {
+document.getElementById('form-total-l').value = 106;
+document.getElementById('form-total-p').value = 42;
+document.getElementById('form-hadir-l').value = 106;
+document.getElementById('form-hadir-p').value = 42;
+document.getElementById('form-kurang-l').value = 0;
+document.getElementById('form-kurang-p').value = 0;
+
+document.getElementById('form-stat-dd').value = 10;
+document.getElementById('form-stat-sakit').value = 0;
+document.getElementById('form-stat-ijin').value = 0;
+document.getElementById('form-stat-tk').value = 0;
+saveFormDraft();
+}
+
+// Switch Tabs in the Right Panel
+function switchRightTab(tabName) {
+activeTab = tabName;
+
+const btnAll = document.getElementById('tab-btn-all');
+const btnDaily = document.getElementById('tab-btn-daily');
+const contentAll = document.getElementById('tab-content-all');
+const contentDaily = document.getElementById('tab-content-daily');
+const searchBarContainer = document.getElementById('search-bar-container');
+
+if (tabName === 'all') {
+btnAll.className = "py-2 px-4 text-xs font-bold rounded-lg transition duration-150 bg-blue-600 text-white shadow-sm";
+btnDaily.className = "py-2 px-4 text-xs font-bold rounded-lg transition duration-150 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200";
+contentAll.classList.remove('hidden');
+contentDaily.classList.add('hidden');
+searchBarContainer.classList.remove('invisible');
+} else {
+btnDaily.className = "py-2 px-4 text-xs font-bold rounded-lg transition duration-150 bg-blue-600 text-white shadow-sm";
+btnAll.className = "py-2 px-4 text-xs font-bold rounded-lg transition duration-150 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200";
+contentDaily.classList.remove('hidden');
+contentAll.classList.add('hidden');
+searchBarContainer.classList.add('invisible');
+renderDailyRecaps();
+}
+}
+
+function autoFillIpdnActivityTemplate() {
+const selectValue = document.getElementById('form-activity-select').value;
+const textfield = document.getElementById('form-personnel');
+
+if (!selectValue) return;
+
+let templateText = "";
+
+if (selectValue === "Ibadah") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Ibadah (Shubuh / Dinas Keagamaan)\n\nWaktu: Pukul 04.00 - 05.00 WIB / Kondisional\n\nRincian Pelaksanaan:\n1. Praja Muslim melaksanakan sholat subuh berjamaah di Masjid Kampus dilanjutkan dengan kultum keagamaan.\n2. Praja non-Muslim menyesuaikan melaksanakan ibadah pagi mandiri di ruang ibadah masing-masing wisma.\n3. Seluruh pergerakan berjalan teratur di bawah pengawasan ketat dinas jaga pengasuhan.\n4. Kesiapan ibadah terpantau lengkap dan khidmat.";
+} else if (selectValue === "Aerobik Pagi") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Aerobik Pagi / Olahraga Kesegaran Jasmani\n\nWaktu: Pukul 05.00 - 05.30 WIB\n\nRincian Pelaksanaan:\n1. Melaksanakan apel olahraga pagi di lapangan utama kampus.\n2. Praja melakukan peregangan statis dan dinamis dilanjutkan dengan lari bersama rute dalam kampus.\n3. Pembinaan fisik dipimpin oleh instruktur olahraga dari satuan pengasuh.\n4. Seluruh praja melaksanakan kegiatan dengan semangat tinggi dan kondisi kesehatan prima.";
+} else if (selectValue === "Pembersihan Mandiri") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Pembersihan Mandiri (Barak, Wisma dan Lingkungan)\n\nWaktu: Pukul 05.30 - 06.15 WIB\n\nRincian Pelaksanaan:\n1. Praja melaksanakan pembersihan interior kamar wisma, koridor, kamar mandi, serta sektor luar barak masing-masing.\n2. Menata perlengkapan pribadi lemari, tempat tidur sesuai ketentuan standar kebersihan wisma.\n3. Pengasuh piket melakukan supervisi kesiapan kebersihan wisma secara mendadak.\n4. Hasil kebersihan terpantau rapi dan bebas sampah.";
+} else if (selectValue === "Up. Makan Pagi") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Upacara Makan Pagi (Ruang Makan)\n\nWaktu: Pukul 06.30 - 07.00 WIB\n\nRincian Pelaksanaan:\n1. Melaksanakan upacara makan pagi dengan tata upacara militer/praja dipimpin oleh Danmen/Wadanmen.\n2. Pengawasan kelayakan menu, kalori pangan, kebersihan peralatan saji oleh satuan piket pengasuhan.\n3. Makan pagi berjalan tertib dengan memperhatikan etika meja makan (table manner) khas IPDN.";
+} else if (selectValue === "Apel Dharma Dan Pengecekan PUDD Wisma Setelah IBL") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Apel Dharma Dan Pengecekan PUDD Wisma Setelah IBL (Izin Bermalam Luar)\n\nWaktu: Pukul 17.00 - 18.00 WIB (Kondisional)\n\nRincian Pelaksanaan:\n1. Melakukan apel penerimaan kembali pasca pelaksanaan IBL guna menghitung kekuatan fisik personil.\n2. Melaksanakan sidak mendalam terhadap PUDD wisma (penataan pakaian dinas, kerapihan tempat tidur, kerapihan potongan rambut).\n3. Catatan khusus: Semua praja kembali tepat waktu, pelanggaran nihil.";
+} else if (selectValue === "Pergerakan Menuju Kelas") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Pergerakan Menuju Kelas Kuliah\n\nWaktu: Pukul 07.15 - 07.30 WIB\n\nRincian Pelaksanaan:\n1. Praja membentuk formasi barisan rapi per kelas/angkatan di depan barak.\n2. Melaksanakan langkah tegap dan tertib berbaris menuju ruang kelas akademik dengan bernyanyi lagu mars IPDN.\n3. Kedisiplinan barisan dipantau oleh Polisi Praja (Polpra) dan satuan pengasuh.";
+} else if (selectValue === "Perkuliahan") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Perkuliahan Akademik / Praktik Lapangan\n\nWaktu: Pukul 07.30 - 12.00 WIB / 13.00 - 15.00 WIB\n\nRincian Pelaksanaan:\n1. Praja mengikuti materi perkuliahan sesuai dengan jadwal kurikulum yang ditentukan oleh bagian Akademik.\n2. Kehadiran dosen dan keaktifan praja di dalam kelas terpantau kondusif.\n3. Suasana belajar mengajar berjalan interaktif, tertib, dan berdisiplin tinggi.";
+} else if (selectValue === "Up. Makan Siang") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Upacara Makan Siang (Ruang Makan)\n\nWaktu: Pukul 12.15 - 12.45 WIB\n\nRincian Pelaksanaan:\n1. Praja melaksanakan upacara makan siang bersama setelah menyelesaikan sesi perkuliahan pagi.\n2. Pengecekan personil lengkap sebelum bersantap dimulai.\n3. Menu makanan bergizi seimbang disajikan bersih, dinikmati secara khidmat oleh seluruh praja.";
+} else if (selectValue === "Pengecekan Sore") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Pengecekan Sore (Latihan Public Speaking)\n\nWaktu: Pukul 16.00 - 16.45 WIB\n\nRincian Pelaksanaan:\n1. Melaksanakan apel pengecekan sore harian di koridor barak.\n2. Mengadakan program khusus peningkatan kompetensi kepemimpinan melalui latihan Public Speaking (berbicara di depan umum) berdurasi 5 s.d. 10 menit per praja secara bergiliran.\n3. Topik berfokus pada aktualisasi nilai Pamong Praja dan analisis kebijakan daerah Kalbar.";
+} else if (selectValue === "Kegiatan Mandiri Minat dan Bakat") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Kegiatan Mandiri Minat dan Bakat (Praja Nasrani di Panti Asuhan Getsemani Pontianak)\n\nWaktu: Pukul 13.30 - 16.00 WIB\n\nRincian Pelaksanaan:\n1. Praja Nasrani melaksanakan bakti sosial kemasyarakatan di Panti Asuhan Getsemani Pontianak sebagai implementasi pengabdian masyarakat.\n2. Kegiatan meliputi pemberian edukasi belajar mandiri dan bantuan logistik.\n3. Pergerakan diawasi melekat oleh perwira pengasuh pendamping.";
+} else if (selectValue === "Up. Makan Malam") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Upacara Makan Malam (Ruang Makan)\n\nWaktu: Pukul 18.45 - 19.15 WIB\n\nRincian Pelaksanaan:\n1. Melaksanakan apel makan malam dipimpin oleh perwira piket.\n2. Tata tertib makan malam dilaksanakan sesuai tradisi korps praja IPDN Kampus Kalbar.\n3. Situasi ruang makan bersih, menu hidangan memadai.";
+} else if (selectValue === "Kerohanian") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Pembinaan Kerohanian Malam\n\nWaktu: Pukul 19.30 - 20.30 WIB\n\nRincian Pelaksanaan:\n1. Kegiatan pendalaman iman dan kajian moral bertempat di masjid, gereja, maupun ruang ibadah bersama.\n2. Diisi dengan ceramah motivasi karakter dan penguatan ketahanan mental spiritual.\n3. Berjalan tertib dan khidmat.";
+} else if (selectValue === "Apel Malam") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Apel Malam Gabungan\n\nWaktu: Pukul 21.00 - 21.30 WIB\n\nRincian Pelaksanaan:\n1. Melaksanakan apel malam untuk pengecekan fisik personil sebelum istirahat malam.\n2. Pembacaan warta dinas, instruksi harian, serta pembagian tugas dinas dalam untuk esok hari.\n3. Seluruh praja dinyatakan hadir lengkap dalam keadaan sehat walafiat.";
+} else if (selectValue === "Apel Pelepasan Pesiar") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Apel Pelepasan Pesiar\n\nWaktu: Pukul 08.00 - 08.30 WIB (Kondisional)\n\nRincian Pelaksanaan:\n1. Praja yang mendapatkan hak pesiar dikumpulkan untuk pemeriksaan kerapihan atribut pakaian dinas pesiar (PDP).\n2. Pembekalan dari Kasat Bina Praja mengenai kepatuhan hukum, norma sosial, dan keselamatan selama di luar kampus.\n3. Penandatanganan buku ijin keluar.";
+} else if (selectValue === "Apel Penerimaan Pesiar") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Apel Penerimaan Pesiar\n\nWaktu: Pukul 21.00 - 21.30 WIB\n\nRincian Pelaksanaan:\n1. Pengecekan detail kehadiran praja kembali pesiar.\n2. Pemeriksaan barang bawaan guna mencegah masuknya barang terlarang ke dalam area kampus.\n3. Seluruh praja kembali lengkap tepat waktu, situasi tertib.";
+} else if (selectValue === "Apel Sena") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Apel Sena Praja\n\nWaktu: Kondisional\n\nRincian Pelaksanaan:\n1. Melaksanakan apel sena dalam rangka konsolidasi penugasan khusus organisasi sena praja.\n2. Pembahasan rencana operasional kegiatan keprajaan dan pembagian sektor penugasan internal.\n3. Kondisi terpantau aman terkendali.";
+} else if (selectValue === "Upacara Civitas Akademika") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Upacara Civitas Akademika IPDN Kalbar\n\nWaktu: Pukul 07.30 - 08.30 WIB (Kondisional)\n\nRincian Pelaksanaan:\n1. Upacara bendera gabungan bersama Direktur Kampus, Dosen, Fungsional, dan jajaran Staff Administrasi.\n2. Pembina upacara menyampaikan arahan terkait kinerja akademik dan disiplin operasional kampus.\n3. Upacara berjalan khidmat, lancar, dan aman.";
+} else if (selectValue === "Apel Wira") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Apel Wira Praja\n\nWaktu: Kondisional\n\nRincian Pelaksanaan:\n1. Pertemuan khusus satgas wira praja dalam menjaga keamanan internal kampus.\n2. Evaluasi kerawanan fisik, pemeriksaan jalur sirkulasi tamu luar, dan penegasan piket pos jaga gerbang.\n3. Anggota siap melaksanakan tugas.";
+} else if (selectValue === "Apel Dharma") {
+templateText = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Apel Dharma Pengasuhan\n\nWaktu: Pukul 17.00 WIB (Kondisional)\n\nRincian Pelaksanaan:\n1. Apel sore khusus pembinaan tradisi korps dan penekanan kedisiplinan praja.\n2. Arahan langsung oleh kepala satuan pengasuhan perihal integritas moral dan kesiapan fisik jasmani praja.\n3. Berlangsung khidmat di lapangan apel.";
+}
+
+textfield.value = templateText;
+saveFormDraft();
+showToast(`Template '${selectValue}' berhasil dimuat!`, "success");
+}
+
+// Insert sample generic text with the requested name as Koordinator
+function insertSampleText() {
+const textfield = document.getElementById('form-personnel');
+document.getElementById('form-piket-koor').value = "Poiman salfin halawa, S.STP. M.Si";
+document.getElementById('form-piket-sekretaris').value = "Bambang Saputra";
+document.getElementById('form-piket-anggota').value = "Syahrul Wahyudi, S.Tr.IP";
+textfield.value = "LAPORAN SITUASI KEGIATAN PENGASUHAN\n\nKegiatan: Pengecekan Sore (Public Speaking)\n\nKeterangan Dinas Dalam & Status:\n1. Seluruh rangkaian kegiatan harian berjalan aman, tertib, dan terkendali.\n2. Anggota piket melakukan patroli berkala di area barak praja putri and putra.\n3. Logistik ruang makan tercukupi dengan baik.";
+saveFormDraft();
+showToast("Teks contoh berhasil dimasukkan!", "success");
+}
+
+function showToast(message, type = 'success') {
+const container = document.getElementById('toast-container');
+const toast = document.createElement('div');
+toast.className = `p-3 rounded-xl shadow-lg border text-xs font-semibold flex items-center space-x-2.5 transition-all duration-300 transform translate-x-12 opacity-0 pointer-events-auto ${
+type === 'success'
+? 'bg-white dark:bg-slate-800 border-emerald-500/35 text-emerald-600 shadow-emerald-100 dark:shadow-none'
+: 'bg-white dark:bg-slate-800 border-red-500/35 text-red-600 shadow-red-100 dark:shadow-none'
+}`;
+
+const icon = type === 'success'
+? '<i class="fa-solid fa-circle-check text-base text-emerald-500"></i>'
+: '<i class="fa-solid fa-triangle-exclamation text-base text-red-500"></i>';
+
+toast.innerHTML = `
+${icon}
+<div class="flex-grow">
+<p class="text-[11px] text-slate-800 dark:text-slate-100 font-semibold">${message}</p>
+</div>
+`;
+
+container.appendChild(toast);
+
+setTimeout(() => {
+toast.classList.remove('translate-x-12', 'opacity-0');
+}, 50);
+
+setTimeout(() => {
+toast.classList.add('translate-x-12', 'opacity-0');
+setTimeout(() => {
+toast.remove();
+}, 300);
+}, 3500);
+}
+
+// Smart Client-Side Resizer & Compressor
+function compressAndPreviewImage(event) {
+const file = event.target.files[0];
+if (!file) return;
+
+originalSizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+
+const reader = new FileReader();
+reader.readAsDataURL(file);
+reader.onload = function (e) {
+const img = new Image();
+img.src = e.target.result;
+img.onload = function () {
+const maxDimension = 1000;
+let width = img.width;
+let height = img.height;
+
+if (width > height) {
+if (width > maxDimension) {
+height = Math.round((height * maxDimension) / width);
+width = maxDimension;
+}
+} else {
+if (height > maxDimension) {
+width = Math.round((width * maxDimension) / height);
+height = maxDimension;
+}
+}
+
+const canvas = document.createElement('canvas');
+canvas.width = width;
+canvas.height = height;
+
+const ctx = canvas.getContext('2d');
+ctx.drawImage(img, 0, 0, width, height);
+
+selectedCompressedImageBase64 = canvas.toDataURL('image/jpeg', 0.65);
+
+const base64Length = selectedCompressedImageBase64.length - (selectedCompressedImageBase64.indexOf(',') + 1);
+const padding = (selectedCompressedImageBase64.charAt(selectedCompressedImageBase64.length - 2) === '=') ? 2 : ((selectedCompressedImageBase64.charAt(selectedCompressedImageBase64.length - 1) === '=') ? 1 : 0);
+const compressedBytes = (base64Length * 0.75) - padding;
+compressedSizeInKB = (compressedBytes / 1024).toFixed(1);
+
+const savingsPercent = Math.round((1 - (compressedBytes / file.size)) * 100);
+
+document.getElementById('original-size').innerText = `${originalSizeInMB} MB`;
+document.getElementById('compressed-size').innerText = `${compressedSizeInKB} KB`;
+document.getElementById('savings-percent').innerText = `${savingsPercent}% Lebih Hemat`;
+
+const previewImg = document.getElementById('image-preview');
+previewImg.src = selectedCompressedImageBase64;
+
+document.getElementById('compression-success-box').classList.remove('hidden');
+saveFormDraft();
+showToast("Gambar berhasil dikompresi sebesar " + savingsPercent + "% demi efisiensi!", "success");
+};
+};
+}
+
+// Remove Selected File
+function removeSelectedImage() {
+selectedCompressedImageBase64 = null;
+document.getElementById('form-image').value = '';
+document.getElementById('compression-success-box').classList.add('hidden');
+saveFormDraft();
+}
+
+// Format date object into indonesian readable string
+function formatDateString(dateStr) {
+if (!dateStr) return '';
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const dateObj = new Date(dateStr);
+return dateObj.toLocaleDateString('id-ID', options);
+}
+
+// Group database elements by Date
+function getGroupedReportsByDate() {
+const groups = {};
+lapsitDatabase.forEach(item => {
+if (!groups[item.date]) {
+groups[item.date] = [];
+}
+groups[item.date].push(item);
+});
+return groups;
+}
+
+function renderReports(items) {
+const container = document.getElementById('results-container');
+const emptyState = document.getElementById('empty-state');
+container.innerHTML = '';
+
+document.getElementById('stats-total-reports').innerText = `${lapsitDatabase.length} Kegiatan`;
+
+if (items.length === 0) {
+emptyState.classList.remove('hidden');
+return;
+} else {
+emptyState.classList.add('hidden');
+}
+
+items.forEach((item) => {
+const card = document.createElement('div');
+card.className = "p-4 bg-slate-50/50 dark:bg-slate-800/40 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-850 hover:border-blue-300 dark:hover:border-blue-500 rounded-xl transition duration-150 flex flex-col sm:flex-row gap-4 group cursor-pointer shadow-sm relative";
+card.onclick = () => openDetailModal(item.id);
+
+let actHeadline = "Laporan Situasi Kampus";
+const headlineMatch = item.personnel.match(/Kegiatan:\s*(.*)/i);
+if (headlineMatch && headlineMatch[1]) {
+actHeadline = headlineMatch[1].trim();
+}
+
+card.innerHTML = `
+<!-- Left Photo Column -->
+<div class="w-full sm:w-28 h-24 rounded-lg bg-white dark:bg-slate-900 overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
+<img src="${item.image}" alt="Dokumentasi Lapsit" class="w-full h-full object-cover group-hover:scale-105 transition duration-200">
+</div>
+<!-- Right Details Column -->
+<div class="flex-grow flex flex-col justify-between space-y-2">
+<div class="space-y-1 pr-6">
+<div class="flex items-center justify-between flex-wrap gap-2">
+<span class="text-[10px] text-blue-700 dark:text-blue-400 font-bold font-mono flex items-center">
+<i class="fa-solid fa-calendar-day mr-1"></i> ${formatDateString(item.date)}
+</span>
+<span class="text-[9px] bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800 font-bold uppercase tracking-wide">${actHeadline}</span>
+</div>
+<p class="text-xs text-slate-600 dark:text-slate-300 font-normal leading-relaxed line-clamp-3 whitespace-pre-line">${item.personnel}</p>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-slate-100 dark:border-slate-800">
+<span class="text-[9px] text-slate-400 dark:text-slate-500 font-semibold font-mono">Dibuat: Posko Jaga IPDN</span>
+<span class="text-[10px] text-slate-500 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition font-bold flex items-center space-x-1">
+<span>Tinjau & Cetak</span>
+<i class="fa-solid fa-arrow-right text-[8px]"></i>
+</span>
+</div>
+</div>
+
+<!-- Delete Report Action Trigger -->
+<button onclick="window.triggerDeleteReport(${item.id}, event)" class="absolute top-2.5 right-2.5 text-slate-400 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-700 p-1.5 rounded-lg transition" title="Hapus Laporan">
+<i class="fa-solid fa-trash-can text-[11px]"></i>
+</button>
+`;
+container.appendChild(card);
+});
+}
+
+// Confirm Delete Modal Handlers (No-alert requirement compliant)
+function triggerDeleteReport(id, event) {
+if (event) event.stopPropagation();
+reportIdToDelete = id;
+document.getElementById('confirm-modal').classList.remove('hidden');
+}
+
+function closeConfirmModal() {
+document.getElementById('confirm-modal').classList.add('hidden');
+reportIdToDelete = null;
+}
+
+async function executeDeleteReport() {
+if (reportIdToDelete !== null) {
+if (db) {
+try {
+await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'reports', String(reportIdToDelete)));
+showToast("Laporan berhasil terhapus otomatis dari cloud!", "success");
+} catch (e) {
+console.error(e);
+showToast("Gagal menghapus dari database cloud.", "error");
+}
+} else {
+lapsitDatabase = lapsitDatabase.filter(report => report.id !== reportIdToDelete);
+showToast("Laporan berhasil dihapus dari penyimpanan lokal!", "success");
+applyFilters();
+if (activeTab === 'daily') {
+renderDailyRecaps();
+}
+}
+closeConfirmModal();
+}
+}
+
+// Render Daily Recaps (Consolidated Days)
+function renderDailyRecaps() {
+const container = document.getElementById('daily-recaps-container');
+container.innerHTML = '';
+
+const grouped = getGroupedReportsByDate();
+const datesSorted = Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a));
+
+if (datesSorted.length === 0) {
+container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">Belum ada data untuk direkap.</p>`;
+return;
+}
+
+datesSorted.forEach(date => {
+const activities = grouped[date];
+const card = document.createElement('div');
+card.className = "p-4 bg-slate-50/50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-750 hover:border-blue-300 rounded-xl space-y-3 shadow-sm";
+
+let activityLabels = activities.map(act => {
+let title = "Kegiatan Pengasuhan";
+const headlineMatch = act.personnel.match(/Kegiatan:\s*(.*)/i);
+if (headlineMatch && headlineMatch[1]) {
+title = headlineMatch[1].trim().split('(')[0];
+}
+return `<span class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-[10px] text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-lg font-medium flex items-center shadow-sm"><i class="fa-solid fa-circle-notch text-[8px] text-blue-600 dark:text-blue-400 mr-1.5 animate-spin"></i>${title}</span>`;
+}).join('');
+
+card.innerHTML = `
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2.5 border-b border-slate-200 dark:border-slate-700">
+<div class="space-y-0.5">
+<span class="text-xs font-bold text-slate-800 dark:text-slate-100 block">${formatDateString(date)}</span>
+<span class="text-[10px] text-slate-500 dark:text-slate-400 block">Total: ${activities.length} Kegiatan Pengasuhan Terinput</span>
+</div>
+<button onclick="window.exportFullDayToWord('${date}')" class="px-3.5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs rounded-xl flex items-center space-x-2 shadow-sm transition">
+<i class="fa-solid fa-file-word text-sm"></i>
+<span>Ekspor Rekap Word (1 Hari)</span>
+</button>
+</div>
+<div class="flex flex-wrap gap-1.5 pt-1">
+${activityLabels}
+</div>
+`;
+container.appendChild(card);
+});
+}
+
+// Apply filters & search queries
+function applyFilters() {
+applySearchFilter();
+}
+
+// Create/Add new report
+async function handleFormSubmit(event) {
+event.preventDefault();
+
+if (!selectedCompressedImageBase64) {
+showToast("Mohon unggah foto dokumentasi terlebih dahulu!", "error");
+return;
+}
+
+const dateValue = document.getElementById('form-date').value;
+const personnelValue = document.getElementById('form-personnel').value;
+
+const sekValue = document.getElementById('form-piket-sekretaris').value.trim();
+const secretaryName = sekValue === "" ? "Bambang Saputra" : sekValue;
+
+const generatedId = lapsitDatabase.length > 0 ? Math.max(...lapsitDatabase.map(r => r.id)) + 1 : 1;
+
+let newReport = {
+id: generatedId,
+date: dateValue,
+personnel: personnelValue,
+image: selectedCompressedImageBase64,
+piketKoor: document.getElementById('form-piket-koor').value || "Poiman salfin halawa, S.STP. M.Si",
+piketSekretaris: secretaryName,
+piketAnggota: document.getElementById('form-piket-anggota').value || "Syahrul Wahyudi, S.Tr.IP",
+stats: {
+totalL: parseInt(document.getElementById('form-total-l').value) || 0,
+totalP: parseInt(document.getElementById('form-total-p').value) || 0,
+hadirL: parseInt(document.getElementById('form-hadir-l').value) || 0,
+hadirP: parseInt(document.getElementById('form-hadir-p').value) || 0,
+kurangL: parseInt(document.getElementById('form-kurang-l').value) || 0,
+kurangP: parseInt(document.getElementById('form-kurang-p').value) || 0,
+dd: parseInt(document.getElementById('form-stat-dd').value) || 0,
+sakit: parseInt(document.getElementById('form-stat-sakit').value) || 0,
+ijin: parseInt(document.getElementById('form-stat-ijin').value) || 0,
+tk: parseInt(document.getElementById('form-stat-tk').value) || 0
+}
+};
+
+if (db) {
+try {
+const { id, ...data } = newReport;
+await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'reports', String(id)), data);
+showToast("Laporan baru terkirim dan tersimpan otomatis di cloud!", "success");
+} catch (e) {
+console.error("Firebase save report error:", e);
+showToast("Gagal menyimpan otomatis ke cloud. Menggunakan cadangan lokal.", "error");
+lapsitDatabase.unshift(newReport);
+}
+} else {
+lapsitDatabase.unshift(newReport);
+showToast("Laporan kegiatan baru berhasil ditambahkan!", "success");
+}
+
+document.getElementById('lapsit-form').reset();
+removeSelectedImage();
+loadDefaultPrajaStats();
+clearFormDraftFromCloud();
+
+if (activeTab === 'all') {
+renderReports(lapsitDatabase);
+} else {
+renderDailyRecaps();
+}
+}
+
+// Modal triggers
+function openDetailModal(id) {
+const report = lapsitDatabase.find(r => r.id === id);
+if (!report) return;
+
+currentlySelectedModalReportId = id;
+
+document.getElementById('modal-date').innerText = formatDateString(report.date);
+document.getElementById('modal-personnel').innerText = report.personnel;
+document.getElementById('modal-img').src = report.image;
+
+document.getElementById('modal-koor').innerText = report.piketKoor || "-";
+document.getElementById('modal-sekretaris').innerText = report.piketSekretaris || "-";
+document.getElementById('modal-anggota').innerText = report.piketAnggota || "-";
+
+const st = report.stats || { totalL: 0, totalP: 0, hadirL: 0, hadirP: 0, kurangL: 0, kurangP: 0, dd: 0, sakit: 0, ijin: 0, tk: 0 };
+document.getElementById('td-total-l').innerText = st.totalL;
+document.getElementById('td-total-p').innerText = st.totalP;
+document.getElementById('td-total-all').innerText = st.totalL + st.totalP;
+
+document.getElementById('td-hadir-l').innerText = st.hadirL;
+document.getElementById('td-hadir-p').innerText = st.hadirP;
+document.getElementById('td-hadir-all').innerText = st.hadirL + st.hadirP;
+
+document.getElementById('td-kurang-l').innerText = st.kurangL;
+document.getElementById('td-kurang-p').innerText = st.kurangP;
+document.getElementById('td-kurang-all').innerText = st.kurangL + st.kurangP;
+
+document.getElementById('td-dd').innerText = st.dd;
+document.getElementById('td-sakit').innerText = st.sakit;
+document.getElementById('td-ijin').innerText = st.ijin;
+document.getElementById('td-tk').innerText = st.tk;
+
+document.getElementById('detail-modal').classList.remove('hidden');
+}
+
+function closeDetailModal() {
+document.getElementById('detail-modal').classList.add('hidden');
+currentlySelectedModalReportId = null;
+}
+
+// EXPORT TO WORD FUNCTION WITH OFFICIAL POIMAN SIGNATURE BLOCK
+function exportCurrentReportToWord() {
+if (!currentlySelectedModalReportId) return;
+const report = lapsitDatabase.find(r => r.id === currentlySelectedModalReportId);
+if (!report) return;
+
+const st = report.stats || { totalL: 0, totalP: 0, hadirL: 0, hadirP: 0, kurangL: 0, kurangP: 0, dd: 0, sakit: 0, ijin: 0, tk: 0 };
+const formattedDate = formatDateString(report.date);
+
+const wordHtml = `
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
+<title>Laporan Jaga Posko IPDN Kalbar</title>
+<style>
+body {
+font-family: 'Times New Roman', Times, serif;
+font-size: 11pt;
+line-height: 1.4;
+color: #000000;
+margin: 1.5cm;
+}
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.font-bold { font-weight: bold; }
+.uppercase { text-transform: uppercase; }
+
+.kop-table {
+width: 100%;
+border-collapse: collapse;
+border: none;
+margin-bottom: 5px;
+}
+.kop-text-title1 {
+font-size: 11pt;
+font-weight: bold;
+text-align: center;
+}
+.kop-text-title2 {
+font-size: 14pt;
+font-weight: bold;
+text-align: center;
+}
+.kop-text-title3 {
+font-size: 11pt;
+font-weight: bold;
+text-align: center;
+}
+.kop-desc {
+font-size: 8.5pt;
+text-align: center;
+}
+.double-border {
+border-bottom: 4px double #000000;
+margin-top: 5px;
+margin-bottom: 15px;
+}
+
+.piket-box-table {
+width: 100%;
+border-collapse: collapse;
+border: 1px solid #000000;
+margin-bottom: 15px;
+}
+.piket-box-table td {
+padding: 6px;
+font-size: 10.5pt;
+}
+
+.strength-table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 10px;
+margin-bottom: 15px;
+}
+.strength-table th {
+border: 1px solid #000000;
+background-color: #f2f2f2;
+font-weight: bold;
+font-size: 9.5pt;
+text-align: center;
+padding: 6px;
+}
+.strength-table td {
+border: 1px solid #000000;
+padding: 6px;
+font-size: 9.5pt;
+text-align: center;
+}
+
+.section-title {
+font-size: 11pt;
+font-weight: bold;
+margin-top: 15px;
+margin-bottom: 5px;
+}
+.content-box {
+background-color: #ffffff;
+border: 1px solid #000000;
+padding: 12px;
+font-size: 10.5pt;
+white-space: pre-wrap;
+margin-bottom: 15px;
+}
+
+.image-container {
+text-align: center;
+margin-top: 10px;
+margin-bottom: 20px;
+}
+.doc-image {
+max-width: 450px;
+height: auto;
+border: 1px solid #000000;
+padding: 5px;
+}
+
+.sig-table {
+width: 100%;
+border-collapse: collapse;
+border: none;
+margin-top: 30px;
+}
+</style>
+</head>
+<body>
+
+<table class="kop-table">
+<tr>
+<td style="width: 100%; text-align: center; vertical-align: middle;">
+<div class="kop-text-title1">KEMENTERIAN DALAM NEGERI</div>
+<div class="kop-text-title1" style="font-size: 10pt;">REPUBLIK INDONESIA</div>
+<div class="kop-text-title2">INSTITUT PEMERINTAHAN DALAM NEGERI</div>
+<div class="kop-text-title3">KAMPUS KALIMANTAN BARAT</div>
+<div class="kop-desc">Jl. Raya Pontianak – Mempawah, Desa Sungai Purun Besar, Kecamatan Segedong,<br>Kabupaten Mempawah, Kode Pos 78351, Website http://www.ipdnkalbar.ac.id</div>
+</td>
+</tr>
+</table>
+
+<div class="double-border"></div>
+
+<div class="text-center" style="margin-bottom: 25px;">
+<div class="font-bold uppercase" style="font-size: 11.5pt; text-decoration: underline;">LAPORAN KEGIATAN HARIAN PENGASUHAN</div>
+<div class="font-bold uppercase" style="font-size: 11.5pt; text-decoration: underline; margin-top: 3px;">IPDN KAMPUS KALIMANTAN BARAT</div>
+</div>
+
+<table class="piket-box-table">
+<tr>
+<td style="width: 25%; font-weight: bold; color: #000000;">Hari / Tanggal</td>
+<td>: ${formattedDate}</td>
+</tr>
+<tr>
+<td style="font-weight: bold; color: #000000;">Koordinator Jaga</td>
+<td>: ${report.piketKoor}</td>
+</tr>
+<tr>
+<td style="font-weight: bold; color: #000000;">Sekretaris Jaga</td>
+<td>: ${report.piketSekretaris || "-"}</td>
+</tr>
+<tr>
+<td style="font-weight: bold; color: #000000;">Anggota Jaga</td>
+<td>: ${report.piketAnggota}</td>
+</tr>
+</table>
+
+<div class="section-title">I. Laporan Kekuatan Personil Praja</div>
+<table class="strength-table">
+<thead>
+<tr>
+<th>Jenis Kelamin</th>
+<th>Jumlah</th>
+<th>Kurang</th>
+<th>Hadir</th>
+<th>Dinas Dalam (DD)</th>
+<th>Sakit</th>
+<th>Ijin</th>
+<th>TK/DL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="font-weight: bold;">Laki-laki (L)</td>
+<td>${st.totalL}</td>
+<td>${st.kurangL}</td>
+<td>${st.hadirL}</td>
+<td rowspan="3" style="vertical-align: middle;">${st.dd}</td>
+<td rowspan="3" style="vertical-align: middle;">${st.sakit}</td>
+<td rowspan="3" style="vertical-align: middle;">${st.ijin}</td>
+<td rowspan="3" style="vertical-align: middle;">${st.tk}</td>
+</tr>
+<tr>
+<td style="font-weight: bold;">Perempuan (P)</td>
+<td>${st.totalP}</td>
+<td>${st.kurangP}</td>
+<td>${st.hadirP}</td>
+</tr>
+<tr style="font-weight: bold; background-color: #f2f2f2;">
+<td>TOTAL</td>
+<td>${st.totalL + st.totalP}</td>
+<td>${st.kurangL + st.kurangP}</td>
+<td>${st.hadirL + st.hadirP}</td>
+</tr>
+</tbody>
+</table>
+
+<div class="section-title">II. Rincian Kegiatan & Laporan Situasi</div>
+<div class="content-box">${report.personnel.replace(/\n/g, '<br>')}</div>
+
+<div class="section-title">III. Lampiran Dokumentasi Kegiatan</div>
+<div class="image-container">
+<img class="doc-image" src="${report.image}" alt="Dokumentasi Kegiatan">
+</div>
+
+<table class="sig-table">
+<tr>
+<td style="width: 55%;"></td>
+<td style="width: 45%; text-align: center; vertical-align: top;">
+<div style="margin-bottom: 50px;">
+<p style="margin: 0;">Kepala Satuan Sena Praja</p>
+<p style="margin: 0;">IPDN Kampus Kalimantan Barat,</p>
+</div>
+<div>
+<p style="margin: 0; font-weight: bold; text-decoration: underline;">Poiman salfin halawa, S.STP. M.Si</p>
+<p style="margin: 0; font-size: 9.5pt; color: #555555; margin-top:3px;">Penata Tk. I (III/d)</p>
+<p style="margin: 0; font-size: 9.5pt; color: #555555; margin-top:2px;">NIP. 199003132012061001</p>
+</div>
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+`;
+
+const blob = new Blob(['\ufeff' + wordHtml], {
+type: 'application/msword;charset=utf-8'
+});
+
+const url = URL.createObjectURL(blob);
+const link = document.createElement('a');
+const sanitizedDate = report.date.replace(/-/g, '_');
+
+link.href = url;
+link.download = `SIPOSENA_IPDN_KALBAR_${sanitizedDate}_ID_${report.id}.doc`;
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
+showToast("Laporan Berhasil Diekspor ke Microsoft Word (.doc)!", "success");
+}
+
+// EXPORT FULL DAY RECAP (CONSOLIDATES ALL ACTIVITIES IN 1 SINGLE DAY INTO 1 FILE)
+function exportFullDayToWord(selectedDate) {
+// ... existing code ... -->
+const url = URL.createObjectURL(blob);
+const link = document.createElement('a');
+const sanitizedDate = selectedDate.replace(/-/g, '_');
+
+link.href = url;
+link.download = `REKAP_HARIAN_SIPOSENA_IPDN_KALBAR_${sanitizedDate}.doc`;
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
+showToast(`Rekap harian ${formattedDate} berhasil diekspor!`, "success");
+}
+
+function applySearchFilter() {
+const query = document.getElementById('result-search').value.toLowerCase();
+const filtered = lapsitDatabase.filter(item => {
+return item.personnel.toLowerCase().includes(query) ||
+item.date.includes(query) ||
+(item.piketKoor && item.piketKoor.toLowerCase().includes(query)) ||
+(item.piketAnggota && item.piketAnggota.toLowerCase().includes(query));
+});
+renderReports(filtered);
+}
+
+async function callGeminiAPI(prompt, systemInstruction) {
+const apiKey = "";
+const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+const payload = {
+contents: [{ parts: [{ text: prompt }] }],
+systemInstruction: { parts: [{ text: systemInstruction }] }
+};
+
+let delay = 1000;
+for (let i = 0; i < 5; i++) {
+try {
+const response = await fetch(url, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(payload)
+});
+
+if (response.ok) {
+const data = await response.json();
+const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+if (resultText) return resultText;
+}
+} catch (e) {
+// Fail silently and retry
+}
+await new Promise(resolve => setTimeout(resolve, delay));
+delay *= 2;
+}
+throw new Error("Gagal terhubung dengan server AI Gemini. Silakan coba sesaat lagi.");
+}
+
+async function optimizeReportWithAI() {
+const draftText = document.getElementById('form-personnel').value.trim();
+if (!draftText) {
+showToast("Tulis draf laporan kasar terlebih dahulu!", "error");
+return;
+}
+
+const loader = document.getElementById('ai-loading');
+const aiBox = document.getElementById('ai-suggestion-box');
+
+loader.classList.remove('hidden');
+aiBox.classList.add('hidden');
+
+const systemPrompt = "Anda adalah asisten pengasuhan cerdas pamong praja IPDN Kampus Kalimantan Barat. Tugas Anda adalah merapikan laporan situasi harian yang ditulis secara kasar, buru-buru, atau tidak formal menjadi laporan resmi kedinasan IPDN yang sangat rapi, baku (EYD), sopan, formal, dan berwibawa. Tetap pertahankan nama praja, angka, status dinas dalam, sakit, haid, atau izin yang ada di teks asli secara akurat. JANGAN membuat data palsu baru. JANGAN memberikan kata pengantar seperti 'Berikut adalah laporan yang dirapikan:' langsung berikan teks hasil laporan saja.";
+
+try {
+const optimizedResult = await callGeminiAPI(draftText, systemPrompt);
+document.getElementById('form-personnel').value = optimizedResult;
+saveFormDraft();
+showToast("✨ Teks berhasil disempurnakan dengan standar kedinasan formal!", "success");
+} catch (error) {
+showToast(error.message, "error");
+} finally {
+loader.classList.add('hidden');
+}
+}
+
+async function analyzeReportWithAI() {
+const draftText = document.getElementById('form-personnel').value.trim();
+const dateVal = document.getElementById('form-date').value;
+
+const totalL = document.getElementById('form-total-l').value || 0;
+const totalP = document.getElementById('form-total-p').value || 0;
+const hadirL = document.getElementById('form-hadir-l').value || 0;
+const hadirP = document.getElementById('form-hadir-p').value || 0;
+const sakit = document.getElementById('form-stat-sakit').value || 0;
+const ijin = document.getElementById('form-stat-ijin').value || 0;
+const dd = document.getElementById('form-stat-dd').value || 0;
+
+const inputMetrics = `
+Tanggal: ${dateVal}
+Kekuatan Praja: Laki-laki Total ${totalL} (Hadir: ${hadirL}), Perempuan Total ${totalP} (Hadir: ${hadirP})
+Kondisi Khusus: Sakit ${sakit}, Izin ${ijin}, Dinas Jaga Dalam ${dd}
+Isi Laporan: "${draftText || 'Tidak ada teks detail tambahan'}"
+`;
+
+const loader = document.getElementById('ai-loading');
+const aiBox = document.getElementById('ai-suggestion-box');
+
+loader.classList.remove('hidden');
+aiBox.classList.add('hidden');
+
+const systemPrompt = "Anda adalah analis taktis keamanan, ketertiban, dan kesehatan di Posko Jaga Pengasuhan IPDN Kalbar. Tugas Anda adalah membaca statistik kekuatan personil dan situasi harian kegiatan yang dilaporkan, kemudian memberikan analisis kerawanan (keamanan, kesehatan, tata tertib) serta memberikan rekomendasi langkah antisipasi taktis yang ringkas, praktis, dan berorientasi tindakan (maksimal 3 poin singkat) dalam bahasa Indonesia yang tegas dan dinas. Gunakan format Markdown yang bersih.";
+
+try {
+const analysisResult = await callGeminiAPI(inputMetrics, systemPrompt);
+aiBox.innerHTML = `<strong>✨ HASIL ANALISIS KERAWANAN TAKTIS (AI):</strong>\n\n${analysisResult}`;
+aiBox.classList.remove('hidden');
+showToast("✨ Analisis taktis kerawanan berhasil dipetakan!", "success");
+} catch (error) {
+showToast(error.message, "error");
+} finally {
+loader.classList.add('hidden');
+}
+}
+
+// Form Draft Cloud Auto-Saving engine
+async function saveFormDraft() {
+if (!db || !auth.currentUser) return;
+const userId = auth.currentUser.uid;
+
+// Path strict (RULE 1) - saving the user form state
+const draftDocRef = doc(db, 'artifacts', appId, 'users', userId, 'draft', 'formState');
+
+const draftData = {
+date: document.getElementById('form-date').value,
+piketKoor: document.getElementById('form-piket-koor').value,
+piketSekretaris: document.getElementById('form-piket-sekretaris').value,
+piketAnggota: document.getElementById('form-piket-anggota').value,
+totalL: document.getElementById('form-total-l').value,
+totalP: document.getElementById('form-total-p').value,
+hadirL: document.getElementById('form-hadir-l').value,
+hadirP: document.getElementById('form-hadir-p').value,
+kurangL: document.getElementById('form-kurang-l').value,
+kurangP: document.getElementById('form-kurang-p').value,
+dd: document.getElementById('form-stat-dd').value,
+sakit: document.getElementById('form-stat-sakit').value,
+ijin: document.getElementById('form-stat-ijin').value,
+tk: document.getElementById('form-stat-tk').value,
+personnel: document.getElementById('form-personnel').value,
+image: selectedCompressedImageBase64 || ""
+};
+
+try {
+await setDoc(draftDocRef, draftData);
+} catch (e) {
+console.error("Draft Auto-Save error: ", e);
+}
+}
+
+// Load existing form draft from firestore on startup
+async function loadFormDraft() {
+if (!db || !auth.currentUser) return;
+const userId = auth.currentUser.uid;
+const draftDocRef = doc(db, 'artifacts', appId, 'users', userId, 'draft', 'formState');
+
+try {
+const docSnap = await getDoc(draftDocRef);
+if (docSnap.exists()) {
+const data = docSnap.data();
+if (data.date) document.getElementById('form-date').value = data.date;
+if (data.piketKoor) document.getElementById('form-piket-koor').value = data.piketKoor;
+if (data.piketSekretaris) document.getElementById('form-piket-sekretaris').value = data.piketSekretaris;
+if (data.piketAnggota) document.getElementById('form-piket-anggota').value = data.piketAnggota;
+if (data.totalL) document.getElementById('form-total-l').value = data.totalL;
+if (data.totalP) document.getElementById('form-total-p').value = data.totalP;
+if (data.hadirL) document.getElementById('form-hadir-l').value = data.hadirL;
+if (data.hadirP) document.getElementById('form-hadir-p').value = data.hadirP;
+if (data.kurangL) document.getElementById('form-kurang-l').value = data.kurangL;
+if (data.kurangP) document.getElementById('form-kurang-p').value = data.kurangP;
+if (data.dd) document.getElementById('form-stat-dd').value = data.dd;
+if (data.sakit) document.getElementById('form-stat-sakit').value = data.sakit;
+if (data.ijin) document.getElementById('form-stat-ijin').value = data.ijin;
+if (data.tk) document.getElementById('form-stat-tk').value = data.tk;
+if (data.personnel) document.getElementById('form-personnel').value = data.personnel;
+if (data.image) {
+selectedCompressedImageBase64 = data.image;
+const previewImg = document.getElementById('image-preview');
+previewImg.src = selectedCompressedImageBase64;
+document.getElementById('compression-success-box').classList.remove('hidden');
+}
+}
+} catch (e) {
+console.error("Failed loading draft: ", e);
+}
+}
+
+async function clearFormDraftFromCloud() {
+if (!db || !auth.currentUser) return;
+const userId = auth.currentUser.uid;
+const draftDocRef = doc(db, 'artifacts', appId, 'users', userId, 'draft', 'formState');
+try {
+await deleteDoc(draftDocRef);
+} catch (e) {
+console.error(e);
+}
+}
+
+// Setup real-time key listeners for input events to trigger auto-save
+function setupDraftAutoSave() {
+const fields = [
+'form-date', 'form-piket-koor', 'form-piket-sekretaris', 'form-piket-anggota',
+'form-total-l', 'form-total-p', 'form-hadir-l', 'form-hadir-p',
+'form-kurang-l', 'form-kurang-p', 'form-stat-dd', 'form-stat-sakit',
+'form-stat-ijin', 'form-stat-tk', 'form-personnel'
+];
+
+let timeout = null;
+fields.forEach(id => {
+const el = document.getElementById(id);
+if (el) {
+el.addEventListener('input', () => {
+clearTimeout(timeout);
+timeout = setTimeout(saveFormDraft, 1000);
+});
+}
+});
+}
+
+// Authenticaton & Database synchronizer initial bootup
+async function bootRealtimeCloudSync() {
+const indicator = document.getElementById('sync-indicator');
+const syncText = document.getElementById('sync-text');
+
+if (!db || !auth) {
+renderReports(lapsitDatabase);
+indicator.classList.add('hidden');
+return;
+}
+
+try {
+indicator.classList.remove('hidden');
+syncText.innerText = "Connecting...";
+
+const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+if (initialAuthToken) {
+await signInWithCustomToken(auth, initialAuthToken);
+} else {
+await signInAnonymously(auth);
+}
+} catch (err) {
+console.error("Auth Error", err);
+syncText.innerText = "Offline Mode";
+renderReports(lapsitDatabase);
+return;
+}
+
+onAuthStateChanged(auth, (user) => {
+if (user) {
+syncText.innerText = "Cloud Sync Online";
+loadFormDraft();
+setupDraftAutoSave();
+
+// Listen directly on public cloud reports
+onSnapshot(reportsCollectionRef, (snapshot) => {
+const cloudReports = [];
+snapshot.forEach((doc) => {
+cloudReports.push({ id: Number(doc.id) || doc.id, ...doc.data() });
+});
+
+if (cloudReports.length === 0) {
+// Seed default local records to firestore
+lapsitDatabase.forEach(async (rep) => {
+const { id, ...data } = rep;
+await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'reports', String(id)), data);
+});
+} else {
+// Sort descending order by date
+cloudReports.sort((a, b) => new Date(b.date) - new Date(a.date));
+lapsitDatabase = cloudReports;
+applyFilters();
+if (activeTab === 'daily') {
+renderDailyRecaps();
+}
+}
+}, (err) => {
+console.error("Firestore loading error:", err);
+showToast("Koneksi cloud terganggu. Menggunakan memori lokal.", "error");
+});
+}
+});
+}
+
+// Expose all interactive functions to global window scope so they can be triggered from HTML elements
+window.toggleTheme = toggleTheme;
+window.loadDefaultPrajaStats = loadDefaultPrajaStats;
+window.switchRightTab = switchRightTab;
+window.autoFillIpdnActivityTemplate = autoFillIpdnActivityTemplate;
+window.insertSampleText = insertSampleText;
+window.compressAndPreviewImage = compressAndPreviewImage;
+window.removeSelectedImage = removeSelectedImage;
+window.handleFormSubmit = handleFormSubmit;
+window.openDetailModal = openDetailModal;
+window.closeDetailModal = closeDetailModal;
+window.exportCurrentReportToWord = exportCurrentReportToWord;
+window.exportFullDayToWord = exportFullDayToWord;
+window.triggerDeleteReport = triggerDeleteReport;
+window.closeConfirmModal = closeConfirmModal;
+window.executeDeleteReport = executeDeleteReport;
+window.optimizeReportWithAI = optimizeReportWithAI;
+window.analyzeReportWithAI = analyzeReportWithAI;
+window.applyFilters = applyFilters;
+
+// Initialize application visual components
+window.onload = function() {
+initializeTheme();
+bootRealtimeCloudSync();
+
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('form-date').value = today;
+
+// Set default blank for Sekretaris as requested
+document.getElementById('form-piket-sekretaris').value = "";
+
+loadDefaultPrajaStats();
+}
+</script>
+</body>
+</html>
